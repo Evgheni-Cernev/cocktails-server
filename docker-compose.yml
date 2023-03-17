@@ -18,12 +18,12 @@ services:
       - ./server:/app
     working_dir: /app
     command: npm start
-    depends_on:
-      - mongo
-  mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
+    # depends_on:
+    #   - mongo
+  # mongo:
+  #   image: mongo
+  #   ports:
+  #     - "27017:27017"
   # mobile-app:
   #   image: node:latest
   #   ports:
