@@ -1,10 +1,9 @@
 const { CocktailModel } = require("../models/Cocktails.model");
-const { filters } = require("../utils");
+const { filters, verifyToken } = require("../utils");
 const uniq = require('lodash/uniq');
 
 module.exports.search = async (req, res, next) => {
   const { ingredients, tools, tags, type } = req.body;
-  // console.warn(">>>>>>>>>>>>>", JSON.stringify({ingredients, tools, tags, type}, null, 2))
   const cocktails = await CocktailModel.find({}).then((coct) => {
     return coct.reduce((acc, cv) => {
       if (
@@ -15,6 +14,19 @@ module.exports.search = async (req, res, next) => {
       return acc;
     }, []);
   });
+
+  try {
+    res.send(cocktails);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+module.exports.getByIds = async (req, res, next) => {
+  const { ids } = req.body;
+  console.log(ids)
+
+  const cocktails = await CocktailModel.find({ _id: { $in: ids } });
 
   try {
     res.send(cocktails);

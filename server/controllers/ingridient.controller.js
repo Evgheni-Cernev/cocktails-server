@@ -24,3 +24,12 @@ module.exports.getByName = async (req, res, next) => {
     res.status(500).send(error);
   }
 };
+
+module.exports.getGroupsByType = async (req, res, next) => {
+  const ingridients = await IngridientModel.find().where(req.params)
+  try {
+    res.send(ingridients);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};

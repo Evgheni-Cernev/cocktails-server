@@ -2,11 +2,8 @@ const express = require("express");
 const listEndpoints = require("express-list-endpoints");
 const chalk = require("chalk");
 const { connectDb } = require("./data/db");
-const port = 3001;
-
-
 connectDb();
-
+const port = 3001;
 const app = require("./core/expterss");
 
 app.use(express.json());
