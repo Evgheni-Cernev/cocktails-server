@@ -6,8 +6,13 @@ const userSchema = new mongoose.Schema({
   password: String,
   filters: {},
   friends: Array(),
-  userName: String,
-  liked_cocktails: {}
+  name: String,
+  liked_cocktails: {},
+  photo: String,
+  chats: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Chat'
+  }]
 });
 
 // Создаем модель для работы с коллекцией

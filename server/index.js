@@ -1,15 +1,17 @@
 const express = require("express");
 const listEndpoints = require("express-list-endpoints");
 const chalk = require("chalk");
-const { connectDb } = require("./data/db");
-connectDb();
 const port = 3001;
 const app = require("./core/expterss");
+const { WS } = require("./routes/api/WS");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
+
+WS();
 
 const displayAllEndpoints = () => {
   const endpoints = listEndpoints(app);

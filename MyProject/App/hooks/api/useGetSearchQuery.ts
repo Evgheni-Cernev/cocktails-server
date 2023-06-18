@@ -15,7 +15,6 @@ const useGetSearchQuery = (route : RouteProp<ParamListBase>) => {
       non_alcoholic: filters.selectedType == 'No-alcohol'
     }
   }
-    console.log(data)
   async function fetchData() {
     try {
       const response = await api.post('/cocktails/search', data);

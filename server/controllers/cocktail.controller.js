@@ -1,5 +1,5 @@
 const { CocktailModel } = require("../models/Cocktails.model");
-const { filters, verifyToken } = require("../utils");
+const { filters } = require("../utils");
 const uniq = require('lodash/uniq');
 
 module.exports.search = async (req, res, next) => {
@@ -24,8 +24,6 @@ module.exports.search = async (req, res, next) => {
 
 module.exports.getByIds = async (req, res, next) => {
   const { ids } = req.body;
-  console.log(ids)
-
   const cocktails = await CocktailModel.find({ _id: { $in: ids } });
 
   try {
