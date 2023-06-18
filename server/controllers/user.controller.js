@@ -1,4 +1,6 @@
 const { UserModel } = require("../models/User.model");
+const path = require("path");
+const fs = require("fs");
 
 module.exports.GetUserDataById = async (req, res, next) => {
   try {
@@ -15,7 +17,6 @@ module.exports.GetUserDataById = async (req, res, next) => {
 
 module.exports.UpdateUser = async (req, res) => {
   const data = req.body;
-  console.log({ _id: req?.params?.id }, { $set: { ...data } });
   try {
     const user = await UserModel.findOneAndUpdate(
       { _id: req?.params?.id },
@@ -74,6 +75,7 @@ module.exports.GetUserFriends = async (req, res, next) => {
 
 module.exports.SetLikedCocktail = async (req, res, next) => {
   const data = req.body;
+  console.log(data.userId);
   try {
     const result = await UserModel.updateOne(
       { _id: data.userId },
@@ -100,40 +102,53 @@ module.exports.SetFiltersCocktail = async (req, res, next) => {
   }
 };
 
-
 module.exports.UploadAvatar = async (req, res, next) => {
+  const { id } = req.params;
+  if (!req.file || Object.keys(req.file).length === 0) {
+    return res.status(400).json({ error: "No files were uploaded." });
+  }
+  const avatar = req.file;
+  const path = `${avatar.filename}`;
+
+  await UserModel.findByIdAndUpdate(
+    id,
+    { $set: { photo: path } },
+    { new: true }
+  )
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      res.send(user);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
+
+module.exports.GetUserAvatar = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).json({ error: "No files were uploaded." });
+    const user = await UserModel.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    const avatar = req.files.avatar; // Assuming the field name for the avatar file is "avatar"
+    if (!user.photo) {
+      return res.status(404).json({ error: "No photo found for the user" });
+    }
+    const photoPath = path.resolve(__dirname, "..", "uploads");
 
-    // Logic to save the avatar file to a storage system (e.g., filesystem, cloud storage)
-    // Replace the following code with your implementation
+    const photoData = fs.readFileSync(path.join(photoPath, user.photo));
 
-    // Example code using fs module to save the file to the local filesystem
-    const path = `avatars/${id}_${avatar.name}`;
-    avatar.mv(path, function (err) {
-      if (err) {
-        return res.status(500).send(err);
-      }
+    const base64Photo = photoData.toString("base64");
 
-      // Update the user document in the database with the avatar path
-      UserModel.findByIdAndUpdate(id, { $set: { avatar: path } }, { new: true })
-        .then((user) => {
-          if (!user) {
-            return res.status(404).json({ error: "User not found" });
-          }
+    const dataUrl = `data:image/png;base64,${base64Photo}`;
 
-          res.send(user);
-        })
-        .catch((error) => {
-          res.status(500).send(error);
-        });
-    });
+    res.send({ photo: dataUrl });
   } catch (error) {
     res.status(500).send(error);
   }
