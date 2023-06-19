@@ -27,7 +27,7 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {MyAccountTabs} from '../../components/MyAccountTabs/MyAccountTabs';
-import {useGetUserPhoto} from '../../hooks/api/useGetUserPhoto';
+// import {useGetUserPhoto} from '../../hooks/api/useGetUserPhoto';
 
 type AccountScreenProps = {
   navigation: Navigation;
@@ -83,7 +83,7 @@ const AccountScreen: FC<AccountScreenProps> = ({navigation, route}) => {
       };
 
       fetch(
-        'http://192.168.100.24:3001/api/user/uploadAvatar/' + userData._id,
+        'https://6964-89-28-121-208.ngrok.io/api/user/uploadAvatar/' + userData._id,
         requestOptions,
       )
         .then(response => response.text())
@@ -94,20 +94,20 @@ const AccountScreen: FC<AccountScreenProps> = ({navigation, route}) => {
     }
   };
 
-  const {getUserPhotoMutation, data} = useGetUserPhoto();
+  // const {getUserPhotoMutation, data} = useGetUserPhoto();
 
-  useEffect(() => {
-    getUserPhotoMutation(userData._id);
-  }, []);
+  // useEffect(() => {
+  //   getUserPhotoMutation(userData._id);
+  // }, []);
 
   const onSubmit = (data: any) => {
     updateUser(data);
     bottomSheetModalRef.current?.close();
   };
-  console.log(data);
+  console.log(userData);
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.screen} >
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View style={styles.container}>
@@ -142,7 +142,9 @@ const AccountScreen: FC<AccountScreenProps> = ({navigation, route}) => {
             ) : (
               <FastImage
                 style={styles.image}
-                source={data ? data.photo : require('../../assets/Profile.png')}
+                source={
+                  // data ? data.photo :
+                   require('../../assets/Profile.png')}
                 resizeMode={FastImage.resizeMode.contain}
               />
             )}

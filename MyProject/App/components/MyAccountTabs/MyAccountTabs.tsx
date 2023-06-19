@@ -21,18 +21,18 @@ export const MyAccountTabs: FC<MyAccountTabsProps> = ({navigation}) => {
       }}>
       <UserInfoCard
         name={'Friends'}
-        count={userData.friends.length}
+        count={userData.friends ? userData.friends.length : 0}
         onPress={() => {
           navigation.navigate('FriendsScreen');
         }}
       />
       <UserInfoCard
         name={'Filters'}
-        count={Object.values(userData.filters).length}
+        count={userData.filters ? Object.values(userData.filters).length: 0}
       />
       <UserInfoCard
         name={'Cocktails'}
-        count={userData.liked_cocktails.length}
+        count={userData.liked_cocktails ? userData.liked_cocktails.length : 0}
       />
     </View>
   );

@@ -4,8 +4,10 @@ import { useEffect, useState } from "react"
 export const useChechIsLogin = () => {
     const [isLogin, setIsLigin] = useState(false);
     const chechIsLogin = async () => {
-        const userId = AsyncStorage && await AsyncStorage.getItem('userId');
-        setIsLigin(!!userId)
+        const token = AsyncStorage && await AsyncStorage.getItem('token');
+    console.log(token)
+
+        setIsLigin(!!token)
     }
     useEffect(() => {
         chechIsLogin()

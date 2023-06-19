@@ -1,14 +1,14 @@
-import { useMutation } from 'react-query';
-import { api } from './api';
+import {useMutation} from 'react-query';
+import {api} from './api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import {Navigation} from '../../types';
 
 interface LoginRequest {
   email: string;
   password: string;
 }
 
-const useLoginQuery = () => {
+const useLoginQuery = (navigation: Navigation) => {
   const loginMutation = useMutation(loginRequest);
   async function loginRequest(userData: LoginRequest) {
     try {
@@ -16,8 +16,11 @@ const useLoginQuery = () => {
       const token = response.data.token;
       const userId = response.data.id;
 
-      AsyncStorage && await AsyncStorage.setItem('token', token); 
-      AsyncStorage && await AsyncStorage.setItem('userId', userId);
+      await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('userId', userId);
+
+      navigation.navigate('CocktailsScreen');
+
       return response.data;
     } catch (error) {
       throw new Error('Login failed');

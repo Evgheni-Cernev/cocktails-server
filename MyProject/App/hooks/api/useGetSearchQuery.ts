@@ -29,7 +29,6 @@ const useGetSearchQuery = (route : RouteProp<ParamListBase>) => {
     return item.NameRU.toLowerCase().indexOf(params && params?.search?.toLowerCase()) !== -1
   }) : [] as Cocktail[]
 
-
   return { isLoading, isError, cocktail: params?.search ? filteredData : resData, error, refetch };
 };
 

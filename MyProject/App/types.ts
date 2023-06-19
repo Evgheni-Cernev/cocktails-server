@@ -41,6 +41,7 @@ export type RootStackParamList = {
     RecipScreen: Cocktail,
     FriendsScreen: undefined,
     ChatScreenScreen: undefined,
+    LoginScreen: undefined,
 };
 
 export type CocktailsScreenRouteProp = RouteProp<RootStackParamList, 'CocktailsScreen'>;
@@ -50,5 +51,6 @@ export type FiltersScreenRouteProp = RouteProp<RootStackParamList, 'Filters'>;
 export type IngridientFiltersRouteProp = RouteProp<RootStackParamList, 'IngridientFilters'>;
 export type RecipScreenRouteProp = RouteProp<RootStackParamList, 'RecipScreen'>;
 export type ChatScreenScreenRouteProp = RouteProp<RootStackParamList, 'ChatScreenScreen'>;
+export type LoginScreenRouteProp = RouteProp<RootStackParamList, 'LoginScreen'>;
 
 export type Navigation =  StackNavigationProp<RootStackParamList, keyof RootStackParamList>

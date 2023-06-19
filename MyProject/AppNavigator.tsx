@@ -62,51 +62,58 @@ const AppNavigator = () => {
     transparentModal: 'modal',
     ...(TransitionScreen as any),
   };
-  const Cocktails = () => (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        cardOverlayEnabled: false,
-        animationTypeForReplace: 'pop',
-      }}>
-      <Stack.Screen
-        name="CocktailsScreen"
-        component={CocktailsScreen}
-        options={CardOptions}
-      />
-      <Stack.Screen name="Filters" component={Filters} options={CardOptions} />
-      <Stack.Screen
-        name="IngridientFilters"
-        component={IngridientFilters}
-        options={CardOptions}
-      />
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={CardOptions}
-      />
-      <Stack.Screen
-        name="RecipScreen"
-        component={RecipScreen}
-        options={CardOptions}
-      />
-      <Stack.Screen
-        name="UserScreen"
-        component={UserScreen}
-        options={CardOptions}
-      />
-      <Stack.Screen
-        name="FriendsScreen"
-        component={FriendsScreen}
-        options={CardOptions}
-      />
-      <Stack.Screen
-        name="ChatScreenScreen"
-        component={ChatScreen}
-        options={CardOptions}
-      />
-    </Stack.Navigator>
-  );
+  const Cocktails = () => {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardOverlayEnabled: false,
+          animationTypeForReplace: 'pop',
+        }}>
+        <Stack.Screen
+          name="CocktailsScreen"
+          component={CocktailsScreen}
+          options={CardOptions}
+        />
+        <Stack.Screen
+          name="Filters"
+          component={Filters}
+          options={CardOptions}
+        />
+        <Stack.Screen
+          name="IngridientFilters"
+          component={IngridientFilters}
+          options={CardOptions}
+        />
+
+        <Stack.Screen
+          name="RecipScreen"
+          component={RecipScreen}
+          options={CardOptions}
+        />
+        <Stack.Screen
+          name="UserScreen"
+          component={UserScreen}
+          options={CardOptions}
+        />
+        <Stack.Screen
+          name="FriendsScreen"
+          component={FriendsScreen}
+          options={CardOptions}
+        />
+        <Stack.Screen
+          name="ChatScreenScreen"
+          component={ChatScreen}
+          options={CardOptions}
+        />
+          <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={CardOptions}
+        />
+      </Stack.Navigator>
+    );
+  };
   return (
     <Tab.Navigator
       screenOptions={{headerShown: false}}
