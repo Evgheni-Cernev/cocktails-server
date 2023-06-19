@@ -107,7 +107,7 @@ const LoginScreen: FC<LoginScreenProps> = ({navigation}) => {
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          title="Share"
+          title="Login"
           color="#737500"
           onPress={handleSubmit(onSubmit)}
         />
